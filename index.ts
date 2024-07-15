@@ -158,10 +158,10 @@ export async function stamp({
       const zoomSig = CalculateZoom(ZOOM, pageWidth, SIGNATURE_WIDTH).toFixed(3);
       const orientation = GetOrientation();
       const size = `${pageSize.width}x${pageSize.height}`; // a4
-      const translationFragment = `-page ${size}-${orientation.x}-${orientation.y}`;
+      const pos = `-${orientation.x}-${orientation.y}`;
       log('Zoom: ', { zoomSig, orientation, pageWidth, pageSize });
       // More info on imagemagick commands here: https://imagemagick.org/script/command-line-options.php#page
-      const cmd = `convert "${TEMP_NORMALISED_SIGNATURE_FILE}" -gravity ${orientation.gravity} -resize ${zoomSig}% -transparent white ${translationFragment} -quality 75 "${TEMP_SIG_PDF}"`;
+	  const cmd = `magick -size "${size}" xc:transparent -gravity ${orientation.gravity} -geometry "${pos}" "${TEMP_NORMALISED_SIGNATURE_FILE}" -composite "${TEMP_SIG_PDF}"`;
       log('Signature CMD: ', cmd);
       return cmd;
     }
@@ -204,7 +204,7 @@ export async function stamp({
 }
 
 async function NormaliseSignatureGetPath(inputSignaturePath: string, outputPath: string, width: number) {
-  await execCmd(`convert ${inputSignaturePath} -set colorspace sRGB -resize '${width}x${width}' "${outputPath}"`)
+  await execCmd(`magick convert ${inputSignaturePath} -set colorspace sRGB -resize '${width}x${width}' "${outputPath}"`)
 }
 
 function GetPdfDataString(inputPdfPath: string) {
