@@ -262,15 +262,17 @@ function MakeTmpPath(fname: string) {
 }
 
 import packageJson from './package.json';
+if (require.main === module) {
+	program
+	  .option('-v, --version', 'Displays version')
+	  .action(async () => {
+		console.log(packageJson.version);
+	  });
 
-program
-  .option('-v, --version', 'Displays version')
-  .action(async () => {
-    console.log(packageJson.version);
-  });
-
-if (process.argv.length < 3) {
-  program.help()
-} else {
-  program.parse(process.argv);
+	if (process.argv.length < 3) {
+	  program.help()
+	} else {
+	  program.parse(process.argv);
+	}
 }
+
