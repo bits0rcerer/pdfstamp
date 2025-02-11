@@ -245,15 +245,7 @@ function GetPageSize(pdfDataDump: string, pageNum: number): {
 }
 
 function RemoveFile(filePath: string) {
-  return new Promise((res, rej) => {
-    rimraf(filePath, (err) => {
-      if (err) {
-        rej(err);
-      } else {
-        res(undefined);
-      }
-    });
-  });
+  rimraf.native(filePath)
 }
 
 const UUID = Math.random().toString(32).slice(2, 10);
