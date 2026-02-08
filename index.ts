@@ -245,7 +245,9 @@ function GetPageSize(pdfDataDump: string, pageNum: number): {
 }
 
 function RemoveFile(filePath: string) {
-  fs.unlinkSync(filePath)
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath)
+  }
 }
 
 const UUID = Math.random().toString(32).slice(2, 10);
