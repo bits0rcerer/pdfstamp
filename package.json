@@ -37,7 +37,6 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "commander": "^7.2.0",
-    "rimraf": "^6.0.1",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {

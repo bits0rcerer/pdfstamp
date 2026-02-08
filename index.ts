@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 import program from "commander";
+import fs from "fs";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
-import rimraf from "rimraf";
 import sh from "shelljs";
 import { execCmd, execCmdResult } from "./utils/exec";
 import { CalculateZoom, CalculateOrientation } from "./utils/signature-utils";
@@ -245,7 +245,7 @@ function GetPageSize(pdfDataDump: string, pageNum: number): {
 }
 
 function RemoveFile(filePath: string) {
-  rimraf.native(filePath)
+  fs.unlinkSync(filePath)
 }
 
 const UUID = Math.random().toString(32).slice(2, 10);
